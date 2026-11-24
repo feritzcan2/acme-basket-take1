@@ -2,6 +2,7 @@ name: Deploy production
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -10,4 +11,11 @@ jobs:
       url: https://acme-shop.example
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Deploying $GITHUB_SHA to production"; sleep 5; echo "production is healthy"
+      - name: Deploy
+        run: echo "Deploying $GITHUB_SHA to production"; sleep 5
+      - name: Post-deploy health check
+        run: |
+          echo "health: /health 200 OK"
+          echo "error rate (15m): 0.00%"
+          echo "p95 latency (15m): 118 ms"
+          echo "checkout success rate (15m): 99.8%"

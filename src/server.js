@@ -1,11 +1,6 @@
 import http from 'node:http';
 import { checkout } from './checkout.js';
-
-const products = [
-  { id: 'mug', name: 'Acme Mug', priceCents: 1299 },
-  { id: 'tee', name: 'Acme T-Shirt', priceCents: 2499 },
-  { id: 'cap', name: 'Acme Cap', priceCents: 1899 },
-];
+import { products, findProduct } from './products.js';
 
 const server = http.createServer(async (req, res) => {
   const send = (status, body) => {
@@ -14,6 +9,10 @@ const server = http.createServer(async (req, res) => {
   };
   if (req.method === 'GET' && req.url === '/health') return send(200, { ok: true });
   if (req.method === 'GET' && req.url === '/products') return send(200, products);
+  if (req.method === 'GET' && req.url.startsWith('/products/')) {
+    const product = findProduct(decodeURIComponent(req.url.slice('/products/'.length)));
+    return product ? send(200, product) : send(404, { error: 'Product not found' });
+  }
   if (req.method === 'POST' && req.url === '/checkout') {
     let raw = '';
     for await (const chunk of req) raw += chunk;

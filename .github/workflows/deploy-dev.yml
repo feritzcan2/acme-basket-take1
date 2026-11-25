@@ -12,3 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "Deploying $GITHUB_SHA to dev"; sleep 5; echo "dev is healthy"
+

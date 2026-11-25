@@ -9,5 +9,5 @@ export function cartSubtotal(items) {
 }
 
 export function shippingCents(subtotalCents) {
-  return subtotalCents >= 5000 ? 0 : 499;
+  return subtotalCents >= 4000 ? 0 : 499;
 }

@@ -19,3 +19,4 @@ jobs:
           echo "error rate (15m): 0.00%"
           echo "p95 latency (15m): 118 ms"
           echo "checkout success rate (15m): 99.8%"
+
